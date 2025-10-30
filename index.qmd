@@ -4,26 +4,9 @@ subtitle: "Starter Template with To-Dos"
 format:
   html: default
 execute:
-  echo: true
+  echo: false
   eval: true
 ---
-
-# 🎲 Simulation Challenge - Starter Template
-
-:::: {.callout-important}
-## 📋 What You Need To Do
-
-- [ ] Fork and create repo `simulationChallenge` in your GitHub
-- [ ] Clone locally and open in Cursor
-- [ ] Write your analysis in this `index.qmd`
-- [ ] Render to HTML (`quarto render` or Render button)
-- [ ] Push HTML to your repo and enable GitHub Pages
-- [ ] Share your site: `https://[your-username].github.io/simulationChallenge/`
-:::
-
-:::: {.callout-warning}
-## ⚠️ AI Partnership Required
-Use Cursor AI for speed, but ensure you understand and can explain the results in your own words.  Verify cursor's calculations as investment simulation is tricky.
 :::
 
 ## The Investment Game (Brief)
@@ -74,26 +57,59 @@ investmentDAG.add_plate([-2, 0.5, 7.8, 1.0], label="t = 1, ..., N", shift=-0.1)
 investmentDAG.show()
 ```
 
-## Analysis Tasks (Fill These In)
 
-::::: {.callout-note}
-## Grading Scope
-
-- Sections 1–4: required and can earn up to 90% of the grade.
-- Sections 5–6: optional; strong, well-supported work here can bring your score up to 100%.
-::::
 
 ### 1) Expected Value After 1 Flip
 
-TODO: Explain whether the expected value of your account balance after one flip is >, =, or < $30,000. What is the gain in expected value as a percentage of your buy-in? Does this simple analysis suggest you should buy-in to the game?
+After one flip, the expected value of your account balance is **greater than** $30,000. The calculation shows that with a fair coin flip (50% probability for each outcome), you have a 50% chance of ending up with $45,000 (heads: +50%) and a 50% chance of ending up with $18,000 (tails: -40%). The expected value is $31,500, which represents a **gain of $1,500 or 5%** above your initial buy-in.
+
+Based on expected value alone, this simple analysis suggests you should buy-in to the game, as it offers a positive expected return. However, this single-metric analysis overlooks the substantial risk: you have a 50% chance of losing $12,000 (40% of your investment) in just one flip. This highlights the importance of considering both expected value and risk when making investment decisions, especially when multiple periods are involved.
 
 ```{python}
 #| label: q1-expected-value-py
 #| echo: true
 
-# TODO: Compute EV after one flip in Python
-# - Show calculation and brief explanation
+# Initial buy-in
+initial_balance = 30000
 
+# After one flip:
+# - Heads (50%): balance increases by 50% → multiply by 1.5
+# - Tails (50%): balance decreases by 40% → multiply by 0.6
+
+balance_heads = initial_balance * 1.5
+balance_tails = initial_balance * 0.6
+
+print(f"Initial balance: ${initial_balance:,.2f}")
+print(f"\nAfter one flip:")
+print(f"  Heads (50% probability): ${balance_heads:,.2f}")
+print(f"  Tails (50% probability): ${balance_tails:,.2f}")
+
+# Expected value calculation
+prob_heads = 0.5
+prob_tails = 0.5
+expected_value = prob_heads * balance_heads + prob_tails * balance_tails
+
+print(f"\nExpected Value (EV) after one flip:")
+print(f"  EV = 0.5 × ${balance_heads:,.2f} + 0.5 × ${balance_tails:,.2f}")
+print(f"  EV = ${expected_value:,.2f}")
+
+# Compare to initial balance
+difference = expected_value - initial_balance
+percent_gain = (difference / initial_balance) * 100
+
+print(f"\nComparison to initial balance:")
+print(f"  EV - Initial = ${difference:,.2f}")
+print(f"  Gain as % of buy-in: {percent_gain:.2f}%")
+
+# Conclusion
+print(f"\nConclusion:")
+if expected_value > initial_balance:
+    print(f"  Expected value (${expected_value:,.2f}) > Initial balance (${initial_balance:,.2f})")
+    print(f"  The expected value suggests a positive return of {percent_gain:.2f}%")
+elif expected_value < initial_balance:
+    print(f"  Expected value (${expected_value:,.2f}) < Initial balance (${initial_balance:,.2f})")
+else:
+    print(f"  Expected value (${expected_value:,.2f}) = Initial balance (${initial_balance:,.2f})")
 ```
 
 ### 2) Single Simulation Over Time (Narrative + Plot)
