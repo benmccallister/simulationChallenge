@@ -1,13 +1,12 @@
 ---
 title: "Simulation Challenge"
-subtitle: "Starter Template with To-Dos"
 format:
   html: default
 execute:
   echo: false
   eval: true
 ---
-:::
+
 
 ## The Investment Game (Brief)
 
